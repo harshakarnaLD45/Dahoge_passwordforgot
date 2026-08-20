@@ -1,0 +1,191 @@
+:root {
+  --serif: Georgia, "Iowan Old Style", "Palatino Linotype",
+    "Times New Roman", serif;
+
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  --kobalt: #1f3c8f;         /* headings / links */
+  --kobalt-dunkel: #16295f;  /* deeper heading tone, h1 */
+  --tinte: #131c33;          /* darkest ink, used sparingly */
+
+  --porzellan: #f5f3ec;      /* page background (cream) */
+  --papier: #ffffff;         /* card background (white) */
+
+  --eiche: #7c5230;          /* eyebrow label / rust accent */
+  --eiche-hell: #9a6c42;     /* lighter oak, body copy under Provider */
+  --honig: #d9a441;          /* rule / divider highlight */
+
+  --linie: #dad4c6;          /* borders / section dividers */
+  --moos: #4c7a4f;           /* reserved accent, unused here */
+
+  --tinte-muted: rgba(19, 28, 51, 0.58); /* muted body copy elsewhere */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.imprint-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--porzellan);
+  padding: clamp(16px, 4vw, 56px) clamp(12px, 3vw, 32px);
+  display: flex;
+  justify-content: center;
+  font-family: var(--sans);
+}
+
+.mt-wrap.imprint-container {
+  width: 100%;
+  max-width: 800px;
+  background-color: var(--papier);
+  border: 1px solid var(--linie);
+  border-radius: clamp(10px, 1.2vw, 18px);
+  padding: clamp(24px, 5vw, 64px) clamp(20px, 6vw, 72px);
+  box-shadow: 0 1px 3px rgba(19, 28, 51, 0.04);
+}
+
+/* ---------- Header ---------- */
+
+.imprint-header {
+  margin-bottom: clamp(24px, 4vw, 40px);
+}
+
+.imprint-eyebrow {
+  display: block;
+  font-family: var(--sans);
+  font-size: clamp(11px, 1vw, 13px);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--eiche);
+  margin: 0 0 clamp(10px, 1.5vw, 14px) 0;
+}
+
+.imprint-header h1 {
+  font-family: var(--serif);
+  font-weight: 700;
+  color: var(--kobalt-dunkel);
+  font-size:28px;
+  line-height: 1.1;
+  margin: 0 0 clamp(10px, 1.5vw, 16px) 0;
+}
+
+.imprint-updated {
+  font-size: clamp(13px, 1vw, 15px);
+  color: var(--tinte-muted);
+  margin: 0 0 clamp(20px, 3vw, 28px) 0;
+}
+
+.imprint-header::after {
+  content: "";
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: var(--honig);
+}
+
+/* ---------- Sections ---------- */
+
+.imprint-section {
+  padding: clamp(20px, 3vw, 32px) 0;
+  border-bottom: 1px solid var(--linie);
+}
+
+.imprint-section:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.imprint-section h2 {
+  font-family: var(--serif);
+  font-weight: 700;
+  color: var(--kobalt-dunkel);
+  font-size: clamp(1.15rem, 0.75vw + 0.95rem, 1.5rem);
+  margin: 0 0 clamp(12px, 1.8vw, 18px) 0;
+}
+
+.imprint-content p,
+.imprint-section > p {
+  margin: 0 0 clamp(10px, 1.5vw, 14px) 0;
+  font-size: clamp(14px, 0.6vw + 0.8rem, 16px);
+  line-height: 1.65;
+  color: var(--eiche-hell);
+}
+
+.imprint-section > p:last-child,
+.imprint-content p:last-child {
+  margin-bottom: 0;
+}
+
+.imprint-company {
+  font-weight: 600;
+  color: var(--eiche-hell);
+}
+
+.imprint-content strong,
+.imprint-section strong {
+  font-weight: 700;
+  color: var(--eiche-hell);
+}
+
+.imprint-content a,
+.imprint-section a {
+  color: var(--kobalt);
+  text-decoration: none;
+}
+
+.imprint-content a:hover,
+.imprint-section a:hover,
+.imprint-content a:focus-visible,
+.imprint-section a:focus-visible {
+  text-decoration: underline;
+}
+
+.imprint-content a:focus-visible,
+.imprint-section a:focus-visible {
+  outline: 2px solid var(--kobalt);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Authorised Representative / Register / Mischtisch Saxony / Consumer
+   Dispute / Content & Image Rights use a quieter, muted ink tone rather
+   than the Provider block's oak body copy — matches the reference image. */
+.imprint-section:not(:first-of-type) > p {
+  color: var(--tinte-muted);
+}
+
+.imprint-section:not(:first-of-type) strong {
+  color: var(--kobalt-dunkel);
+}
+
+/* ---------- Responsive tweaks ---------- */
+
+@media (max-width: 480px) {
+  .mt-wrap.imprint-container {
+    border-radius: 10px;
+  }
+
+  .imprint-header h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 1600px) {
+  .mt-wrap.imprint-container {
+    max-width: 960px;
+  }
+
+  .imprint-page {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+  }
+}

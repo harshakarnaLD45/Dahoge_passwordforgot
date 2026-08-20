@@ -1,0 +1,127 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isPasswordUser() {
+      return signedIn()
+        && request.auth.token.firebase.sign_in_provider == 'password';
+    }
+
+    function isAdmin() {
+      return signedIn() && request.auth.token.admin == true;
+    }
+
+    function isVenueHost(venueId) {
+      return isPasswordUser()
+        && exists(/databases/$(database)/documents/venues/$(venueId))
+        && get(/databases/$(database)/documents/venues/$(venueId)).data.hostUid == request.auth.uid;
+    }
+
+    match /venues/{venueId} {
+      allow read: if true;
+      allow create: if isPasswordUser()
+        && request.resource.data.hostUid == request.auth.uid;
+      allow update: if isAdmin()
+        || (isVenueHost(venueId)
+          && request.resource.data.hostUid == resource.data.hostUid);
+      allow delete: if isAdmin() || isVenueHost(venueId);
+    }
+    
+
+    match /hostProfiles/{uid} {
+      allow get: if (isPasswordUser() && request.auth.uid == uid) || isAdmin();
+      allow create, update, delete: if isPasswordUser()
+        && request.auth.uid == uid;
+      allow list: if isAdmin();
+    }
+
+    match /guests/{uid} {
+      allow read, create, update, delete: if signedIn()
+        && request.auth.uid == uid;
+    }
+
+    match /reservations/{reservationId} {
+      allow create: if signedIn()
+        && request.resource.data.guestUid == request.auth.uid
+        && request.resource.data.locId is string;
+      allow read, delete: if signedIn()
+        && (
+          resource.data.guestUid == request.auth.uid
+          || isVenueHost(resource.data.locId)
+          || isAdmin()
+        );
+      allow update: if signedIn()
+        && (
+          (resource.data.guestUid == request.auth.uid
+            && request.resource.data.guestUid == request.auth.uid
+            && request.resource.data.locId == resource.data.locId)
+          || (isVenueHost(resource.data.locId)
+            && request.resource.data.guestUid == resource.data.guestUid
+            && request.resource.data.locId == resource.data.locId)
+          || isAdmin()
+        );
+    }
+
+    match /occupancy/{occupancyId} {
+      allow read: if true;
+      allow create, update, delete: if signedIn();
+    }
+
+    match /notifications/{notificationId} {
+      allow create: if signedIn()
+        && request.resource.data.createdByUid == request.auth.uid
+        && request.resource.data.venueId is string;
+      allow read, update, delete: if signedIn()
+        && (
+          resource.data.createdByUid == request.auth.uid
+          || isVenueHost(resource.data.venueId)
+          || isAdmin()
+        );
+    }
+
+    match /venuePhotos/{venueId} {
+      allow read: if true;
+      allow create, update, delete: if isVenueHost(venueId) || isAdmin();
+    }
+
+    match /registrations/{registrationId} {
+      allow create: if isPasswordUser()
+        && request.resource.data.createdByUid == request.auth.uid
+        && request.resource.data.hostUid == request.auth.uid
+        && request.resource.data.betriebId is string;
+      allow get: if (isPasswordUser()
+        && resource.data.createdByUid == request.auth.uid) || isAdmin();
+      allow list, update, delete: if isAdmin();
+    }
+
+    match /tableShapeSubmissions/{submissionId} {
+      allow create: if signedIn()
+        && request.resource.data.createdByUid == request.auth.uid;
+      allow get: if signedIn()
+        && (resource.data.createdByUid == request.auth.uid || isAdmin());
+      allow list, update, delete: if isAdmin();
+    }
+
+    match /settings/regCounter {
+      allow read: if isPasswordUser();
+      allow create: if isPasswordUser()
+        && request.resource.data.value == 1;
+      allow update: if isPasswordUser()
+        && request.resource.data.value == resource.data.value + 1;
+      allow delete: if isAdmin();
+    }
+
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /emailTemplates/{templateId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}

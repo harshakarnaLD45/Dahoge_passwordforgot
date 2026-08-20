@@ -1,0 +1,4 @@
+  html,body{margin:0;padding:0;background:#F5F3EC}
+  #root{min-height:100vh}
+  #noscript{max-width:620px;margin:80px auto;padding:28px;background:#fff;border:1px solid #DAD4C6;border-radius:16px;
+    font:400 16px/1.55 system-ui,sans-serif;color:#131C33}

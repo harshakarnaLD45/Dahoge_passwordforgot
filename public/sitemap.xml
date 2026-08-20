@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+    <!-- Home -->
+    <url>
+        <loc>https://mischtisch-sachsen.de/</loc>
+        <priority>1.0</priority>
+
+        <xhtml:link
+            rel="alternate"
+            hreflang="de"
+            href="https://mischtisch-sachsen.de/" />
+    </url>
+
+    <!-- About -->
+    <url>
+        <loc>https://mischtisch-sachsen.de/ueber</loc>
+        <priority>0.8</priority>
+
+        <xhtml:link
+            rel="alternate"
+            hreflang="de"
+            href="https://mischtisch-sachsen.de/ueber" />
+    </url>
+
+    <!-- Legal -->
+    <url>
+        <loc>https://mischtisch-sachsen.de/rechtliches</loc>
+        <priority>0.4</priority>
+
+        <xhtml:link
+            rel="alternate"
+            hreflang="de"
+            href="https://mischtisch-sachsen.de/rechtliches" />
+    </url>
+
+</urlset>

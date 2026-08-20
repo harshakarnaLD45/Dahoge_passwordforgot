@@ -1,0 +1,21 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function isAdmin() {
+      return request.auth != null && request.auth.token.admin == true;
+    }
+
+    function isPasswordUser() {
+      return request.auth != null
+        && request.auth.token.firebase.sign_in_provider == 'password';
+    }
+
+    match /venues/{venueId}/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin()
+        || (isPasswordUser()
+          && firestore.exists(/databases/(default)/documents/venues/$(venueId))
+          && firestore.get(/databases/(default)/documents/venues/$(venueId)).data.hostUid == request.auth.uid);
+    }
+  }
+}

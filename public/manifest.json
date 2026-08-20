@@ -1,0 +1,10 @@
+{
+  "short_name": "Mischtisch",
+  "name": "Mischtisch Sachsen — Testfassung der Reservierungsplattform",
+  "lang": "de",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#F5F3EC",
+  "background_color": "#F5F3EC"
+}

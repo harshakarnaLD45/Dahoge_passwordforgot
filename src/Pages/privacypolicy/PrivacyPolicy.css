@@ -1,0 +1,446 @@
+/* =========================================================
+   PRIVACY POLICY PAGE
+   Same visual system as Imprint
+   ========================================================= */
+
+:root {
+  --serif: Georgia, "Iowan Old Style", "Palatino Linotype",
+    "Times New Roman", serif;
+
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  --kobalt: #1f3c8f;
+  --kobalt-dunkel: #16295f;
+  --tinte: #131c33;
+
+  --porzellan: #f5f3ec;
+  --papier: #ffffff;
+
+  --eiche: #7c5230;
+  --eiche-hell: #9a6c42;
+  --honig: #d9a441;
+
+  --linie: #dad4c6;
+  --moos: #4c7a4f;
+
+  --tinte-muted: rgba(19, 28, 51, 0.58);
+}
+
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.privacy-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--porzellan);
+  padding: clamp(16px, 4vw, 56px) clamp(12px, 3vw, 32px);
+  display: flex;
+  justify-content: center;
+  font-family: var(--sans);
+  color: var(--tinte);
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+
+.mt-wrap.privacy-container {
+  width: 100%;
+  max-width: 800px;
+  background-color: var(--papier);
+  border: 1px solid var(--linie);
+  border-radius: clamp(10px, 1.2vw, 18px);
+  padding: clamp(24px, 5vw, 64px) clamp(20px, 6vw, 72px);
+  box-shadow: 0 1px 3px rgba(19, 28, 51, 0.04);
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.privacy-header {
+  margin-bottom: clamp(24px, 4vw, 40px);
+}
+
+
+.privacy-eyebrow {
+  display: block;
+  font-family: var(--sans);
+  font-size: clamp(11px, 1vw, 13px);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--eiche);
+  margin: 0 0 clamp(10px, 1.5vw, 14px) 0;
+}
+
+
+.privacy-header h1 {
+  font-family: var(--serif);
+  font-weight: 700;
+  color: var(--kobalt-dunkel);
+  font-size: 28px;
+  line-height: 1.1;
+  margin: 0 0 clamp(10px, 1.5vw, 16px) 0;
+}
+
+
+.privacy-updated {
+  font-size: clamp(13px, 1vw, 15px);
+  color: var(--tinte-muted);
+  margin: 0 0 clamp(20px, 3vw, 28px) 0;
+}
+
+
+.privacy-header::after {
+  content: "";
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: var(--honig);
+}
+
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
+.privacy-section {
+  padding: clamp(20px, 3vw, 32px) 0;
+  border-bottom: 1px solid var(--linie);
+}
+
+
+.privacy-section:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+
+/* =========================================================
+   SECTION HEADINGS
+   ========================================================= */
+
+.privacy-section h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+
+  font-family: var(--serif);
+  font-weight: 700;
+  color: var(--kobalt-dunkel);
+
+  font-size: clamp(1.15rem, 0.75vw + 0.95rem, 1.5rem);
+  line-height: 1.3;
+
+  margin: 0 0 clamp(12px, 1.8vw, 18px) 0;
+}
+
+
+.privacy-section h2 span {
+  flex-shrink: 0;
+  color: var(--kobalt-dunkel);
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.privacy-content p,
+.privacy-section > p {
+  margin: 0 0 clamp(10px, 1.5vw, 14px) 0;
+
+  font-size: clamp(14px, 0.6vw + 0.8rem, 16px);
+  line-height: 1.65;
+
+  color: var(--tinte-muted);
+}
+
+
+.privacy-content p:last-child,
+.privacy-section > p:last-child {
+  margin-bottom: 0;
+}
+
+
+/* Multiple paragraphs inside sections */
+
+.privacy-section > p + p {
+  margin-top: clamp(10px, 1.5vw, 14px);
+}
+
+
+/* =========================================================
+   CONTROLLER / COMPANY
+   ========================================================= */
+
+.privacy-company {
+  font-weight: 600 !important;
+  color: var(--eiche-hell) !important;
+}
+
+
+/* =========================================================
+   STRONG TEXT
+   ========================================================= */
+
+.privacy-content strong,
+.privacy-section strong {
+  font-weight: 700;
+  color: var(--kobalt-dunkel);
+}
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+.privacy-content a,
+.privacy-section a {
+  color: var(--kobalt);
+  text-decoration: none;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+
+.privacy-content a:hover,
+.privacy-section a:hover {
+  text-decoration: underline;
+}
+
+
+.privacy-content a:focus-visible,
+.privacy-section a:focus-visible {
+  outline: 2px solid var(--kobalt);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+
+/* =========================================================
+   IMPORTANT NOTES
+   ========================================================= */
+
+.privacy-note {
+  margin-top: clamp(16px, 2.5vw, 24px);
+
+  padding: clamp(14px, 2vw, 18px) clamp(16px, 2.5vw, 20px);
+
+  border-left: 3px solid var(--honig);
+
+  background-color: var(--porzellan);
+
+  font-size: clamp(13px, 0.5vw + 0.75rem, 15px);
+  line-height: 1.65;
+
+  color: var(--tinte-muted);
+}
+
+
+.privacy-note strong {
+  color: var(--kobalt-dunkel);
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   LIST
+   ========================================================= */
+
+.privacy-list {
+  margin: 0;
+  padding-left: clamp(20px, 3vw, 24px);
+}
+
+
+.privacy-list li {
+  margin-bottom: clamp(9px, 1.3vw, 13px);
+  padding-left: 5px;
+
+  font-size: clamp(14px, 0.6vw + 0.8rem, 16px);
+  line-height: 1.65;
+
+  color: var(--tinte-muted);
+}
+
+
+.privacy-list li:last-child {
+  margin-bottom: 0;
+}
+
+
+.privacy-list strong {
+  color: var(--kobalt-dunkel);
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .privacy-page {
+    padding: 40px 20px 56px;
+  }
+
+  .mt-wrap.privacy-container {
+    padding: 40px 32px;
+  }
+
+  .privacy-header {
+    margin-bottom: 36px;
+  }
+
+  .privacy-header h1 {
+    font-size: clamp(2.1rem, 7vw, 3rem);
+  }
+
+  .privacy-section {
+    padding: 24px 0;
+  }
+
+  .privacy-section h2 {
+    font-size: 1.35rem;
+    margin-bottom: 14px;
+  }
+
+  .privacy-content p,
+  .privacy-section > p,
+  .privacy-list li {
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .privacy-note {
+    font-size: 14px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+  .privacy-page {
+    padding: 16px 12px 40px;
+  }
+
+  .mt-wrap.privacy-container {
+    border-radius: 10px;
+    padding: 28px 20px;
+  }
+
+  .privacy-header {
+    margin-bottom: 28px;
+  }
+
+  .privacy-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+  }
+
+  .privacy-header h1 {
+    font-size: 2rem;
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+
+  .privacy-updated {
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+  .privacy-header::after {
+    height: 2px;
+  }
+
+  .privacy-section {
+    padding: 22px 0;
+  }
+
+  .privacy-section h2 {
+    gap: 6px;
+    font-size: 1.2rem;
+    line-height: 1.3;
+    margin-bottom: 13px;
+  }
+
+  .privacy-content p,
+  .privacy-section > p {
+    font-size: 14px;
+    line-height: 1.65;
+    margin-bottom: 10px;
+  }
+
+  .privacy-section > p + p {
+    margin-top: 10px;
+  }
+
+  .privacy-list {
+    padding-left: 19px;
+  }
+
+  .privacy-list li {
+    padding-left: 3px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .privacy-note {
+    margin-top: 16px;
+    padding: 14px 15px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+}
+
+
+/* =========================================================
+   LARGE SCREENS
+   ========================================================= */
+
+@media (min-width: 1600px) {
+  .mt-wrap.privacy-container {
+    max-width: 960px;
+  }
+
+  .privacy-page {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+  }
+
+  .privacy-content a,
+  .privacy-section a {
+    transition: none;
+  }
+}

@@ -1,0 +1,776 @@
+/* Basis-Styles aus der HTML-Fassung extrahiert (src/index.css importiert diese Datei). */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #f5f3ec;
+}
+#root {
+  min-height: 100vh;
+}
+#noscript {
+  max-width: 620px;
+  margin: 80px auto;
+  padding: 28px;
+  background: #fff;
+  border: 1px solid #dad4c6;
+  border-radius: 16px;
+  font: 400 16px/1.55 system-ui, sans-serif;
+  color: #131c33;
+}
+
+/* Keine externen Schriften: alles wird lokal aus den Systemschriften gesetzt,
+   damit beim Aufruf keine Daten an Dritte (z. B. Google Fonts) übertragen werden. */
+:root {
+  --serif: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Times New Roman', serif;
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --kobalt: #1f3c8f;
+  --kobalt-dunkel: #16295f;
+  --tinte: #131c33;
+  --porzellan: #f5f3ec;
+  --papier: #ffffff;
+  --eiche: #7c5230;
+  --eiche-hell: #9a6c42;
+  --honig: #d9a441;
+  --linie: #dad4c6;
+  --moos: #4c7a4f;
+}
+* {
+  box-sizing: border-box;
+}
+.mt-root {
+  min-height: 100vh;
+  background: var(--porzellan);
+  color: var(--tinte);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.mt-wrap {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Sticky header */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--porzellan);
+}
+.f-display {
+  font-family: var(--serif);
+  letter-spacing: -0.01em;
+}
+
+/* Emailleschild-Header */
+.sign {
+  background: var(--kobalt);
+  color: #f8f6ef;
+  border-radius: 16px;
+  box-shadow: inset 0 0 0 2px var(--kobalt), inset 0 0 0 4px rgba(248, 246, 239, 0.85),
+    inset 0 0 0 16px var(--kobalt), 0 6px 18px rgba(22, 41, 95, 0.25);
+  padding: 14px 22px;
+}
+.wordmark {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+.wordmark .dot {
+  color: var(--honig);
+}
+.sub-sign {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin-top: 3px;
+}
+
+.nav-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--tinte);
+  font: inherit;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.nav-btn:hover {
+  border-color: var(--linie);
+  background: var(--papier);
+}
+.nav-btn.on {
+  background: var(--tinte);
+  color: var(--porzellan);
+}
+.nav-badge {
+  display: inline-block;
+  min-width: 18px;
+  padding: 0 5px;
+  margin-left: 6px;
+  border-radius: 999px;
+  background: var(--honig);
+  color: var(--tinte);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 18px;
+}
+
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--eiche);
+}
+.h1 {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(32px, 5.5vw, 52px);
+  line-height: 1.06;
+  margin: 10px 0 14px;
+  color: var(--kobalt-dunkel);
+}
+.lead {
+  font-size: 17px;
+  max-width: 52ch;
+  color: #3a4258;
+}
+
+.btn {
+  font: inherit;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 12px 20px;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: transform 0.08s ease, background 0.15s ease;
+}
+.btn:active {
+  transform: scale(0.98);
+}
+.btn-primary {
+  background: var(--kobalt);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--kobalt-dunkel);
+}
+.btn-primary:disabled {
+  background: #9aa4c4;
+  cursor: not-allowed;
+}
+.btn-ghost {
+  background: transparent;
+  border-color: var(--tinte);
+  color: var(--tinte);
+}
+.btn-ghost:hover {
+  background: var(--papier);
+}
+.btn-danger {
+  background: transparent;
+  border-color: #b4443c;
+  color: #b4443c;
+  padding: 8px 14px;
+  font-size: 14px;
+}
+.btn-danger:hover {
+  background: #fbeeec;
+}
+.btn-sm {
+  padding: 8px 14px;
+  font-size: 14px;
+}
+
+.chip {
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  background: var(--papier);
+  border: 1px solid var(--linie);
+  color: var(--tinte);
+}
+.chip:hover {
+  border-color: var(--kobalt);
+}
+.chip.on {
+  background: var(--kobalt);
+  border-color: var(--kobalt);
+  color: #fff;
+}
+
+.card {
+  background: var(--papier);
+  border: 1px solid var(--linie);
+  border-radius: 16px;
+  padding: 20px;
+}
+.card-hover {
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.card-hover:hover {
+  border-color: var(--kobalt);
+  box-shadow: 0 8px 22px rgba(31, 60, 143, 0.1);
+}
+
+.input {
+  font: inherit;
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 12px;
+  border: 1.5px solid var(--linie);
+  background: var(--papier);
+  color: var(--tinte);
+}
+.input:focus {
+  outline: 2px solid var(--kobalt);
+  outline-offset: 1px;
+  border-color: var(--kobalt);
+}
+select.input {
+  appearance: none;
+  cursor: pointer;
+}
+.label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 0 6px;
+  color: #3a4258;
+}
+.field-err {
+  border-color: #b4443c;
+}
+
+.slot {
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 9px 16px;
+  border-radius: 12px;
+  border: 1.5px solid var(--linie);
+  background: var(--papier);
+  cursor: pointer;
+}
+.slot.on {
+  background: var(--eiche);
+  border-color: var(--eiche);
+  color: #fff;
+}
+
+.daybtn {
+  font: inherit;
+  border: 1.5px solid var(--linie);
+  background: var(--papier);
+  border-radius: 12px;
+  padding: 8px 6px;
+  min-width: 58px;
+  cursor: pointer;
+  text-align: center;
+  flex: 0 0 auto;
+}
+.daybtn .dow {
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #6a7288;
+}
+.daybtn .dom {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.15;
+}
+.daybtn.on {
+  background: var(--kobalt);
+  border-color: var(--kobalt);
+  color: #fff;
+}
+.daybtn.on .dow {
+  color: #cbd5f5;
+}
+.daybtn.off {
+  opacity: 0.35;
+}
+
+.chair {
+  cursor: pointer;
+}
+.chair:focus {
+  outline: none;
+}
+.chair:focus .chair-ring {
+  stroke: var(--honig);
+  stroke-width: 3;
+}
+.chair-free:hover .chair-body {
+  fill: #e7ecfb;
+}
+.chair-taken {
+  cursor: not-allowed;
+}
+
+.legend {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: #3a4258;
+  justify-content: center;
+}
+.dotmini {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: -1px;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  transform: translateX(-50%);
+  background: var(--tinte);
+  color: var(--porzellan);
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14.5px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  z-index: 60;
+  animation: toast-in 0.25s ease;
+}
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.hero-panel {
+  background: linear-gradient(180deg, #ffffff 0%, #fbfaf5 100%);
+  border: 1px solid var(--linie);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+/* E-Mail-Vorschau */
+.email-card {
+  background: #fdfcf8;
+  border: 1px solid var(--linie);
+  border-radius: 14px;
+  overflow: hidden;
+  text-align: left;
+}
+.email-top {
+  background: var(--tinte);
+  color: var(--porzellan);
+  font-size: 11.5px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 7px 16px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+.email-head {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--linie);
+  font-size: 13px;
+  display: grid;
+  gap: 3px;
+}
+.email-head b {
+  color: #5b627a;
+  font-weight: 600;
+  display: inline-block;
+  min-width: 58px;
+}
+.email-body {
+  padding: 14px 16px 16px;
+  font-size: 14px;
+  color: #2a3147;
+  display: grid;
+  gap: 7px;
+}
+
+@keyframes seat-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.pulse {
+  animation: seat-pulse 2.6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pulse {
+    animation: none;
+  }
+  .toast {
+    animation: none;
+  }
+}
+
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+/* Karte auf der Startseite — Leaflet braucht eine feste Höhe. */
+.home-map-section {
+  margin: 24px 0;
+}
+.map-wrapper {
+  position: relative;
+  height: 400px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--linie);
+}
+.map-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--hintergrund, #fff);
+  color: #5b627a;
+  z-index: 500;
+  font-size: 14px;
+}
+.mischtisch-map {
+  height: 100%;
+  width: 100%;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+.footer {
+  font-size: 13px;
+  color: #5b627a;
+}
+.notice {
+  font-size: 12.5px;
+  color: #6a7288;
+}
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  background: #ede9dd;
+  color: var(--eiche);
+  border-radius: 6px;
+  padding: 3px 8px;
+}
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .print-area,
+  .print-area * {
+    visibility: visible;
+  }
+  .print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 0 12mm;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
+.beleg {
+  border: 1px solid var(--linie);
+  border-radius: 14px;
+  padding: 22px 24px;
+  background: #fff;
+}
+.beleg-kopf {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  border-bottom: 2px solid var(--kobalt);
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+}
+.beleg-zeile {
+  display: flex;
+  gap: 10px;
+  padding: 5px 0;
+  border-bottom: 1px dotted var(--linie);
+  font-size: 14.5px;
+}
+.beleg-zeile b {
+  min-width: 150px;
+  color: #5b627a;
+  font-weight: 600;
+}
+.aktion-box {
+  border: 1.5px solid var(--honig);
+  background: #fdf6e7;
+  border-radius: 14px;
+  padding: 14px 16px;
+}
+.aktion-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  background: var(--honig);
+  color: var(--tinte);
+  border-radius: 6px;
+  padding: 3px 8px;
+}
+.step-nr {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--kobalt);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-family: var(--serif);
+  font-size: 17px;
+}
+.tab {
+  font: inherit;
+  font-weight: 600;
+  font-size: 14.5px;
+  padding: 9px 16px;
+  border-radius: 12px 12px 0 0;
+  border: 1px solid transparent;
+  border-bottom: none;
+  background: transparent;
+  color: #5b627a;
+  cursor: pointer;
+}
+.tab.on {
+  background: var(--papier);
+  border-color: var(--linie);
+  color: var(--tinte);
+}
+.tabbar {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--linie);
+  padding: 0 6px;
+}
+.tabpanel {
+  background: var(--papier);
+  border: 1px solid var(--linie);
+  border-top: none;
+  border-radius: 0 0 16px 16px;
+  padding: 20px;
+}
+.sprache {
+  display: flex;
+  gap: 0;
+  border: 1.5px solid var(--linie);
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--papier);
+}
+.sprache button {
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 5px 11px;
+  border: none;
+  background: transparent;
+  color: #5b627a;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+}
+.sprache button.on {
+  background: var(--kobalt);
+  color: #fff;
+}
+.dehoga-badge {
+  background: var(--papier);
+  border: 1.5px dashed #9aa0b4;
+  border-radius: 10px;
+  padding: 6px 12px;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  cursor: pointer;
+}
+.dehoga-badge:hover {
+  border-color: var(--kobalt);
+  border-style: solid;
+}
+.logo-slot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.galerie {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--linie);
+  background: #ede9dd;
+}
+.galerie img.gross {
+  width: 100%;
+  height: clamp(180px, 34vw, 320px);
+  object-fit: cover;
+  display: block;
+}
+.mini-reihe {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  overflow-x: auto;
+  background: var(--papier);
+}
+.mini {
+  width: 74px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+.mini.on {
+  border-color: var(--kobalt);
+}
+.karte-bild {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+}
+.foto-kachel {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--linie);
+}
+.foto-kachel img {
+  width: 100%;
+  height: 96px;
+  object-fit: cover;
+  display: block;
+}
+.foto-weg {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: rgba(19, 28, 51, 0.82);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1;
+}
+.foto-haupt {
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+  background: var(--kobalt);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font: 600 10.5px/1 inherit;
+  padding: 4px 7px;
+  cursor: pointer;
+}
+.foto-haupt.on {
+  background: var(--honig);
+  color: var(--tinte);
+}
+.logo-img {
+  height: 46px;
+  width: auto;
+  max-width: 190px;
+  object-fit: contain;
+  display: block;
+}
+.logo-img.klein {
+  height: 34px;
+  max-width: 150px;
+}
+.logo-edit {
+  background: none;
+  border: none;
+  font: inherit;
+  font-size: 11.5px;
+  color: #6a7288;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+.logo-edit:hover {
+  color: var(--kobalt);
+}
+.dehoga-badge span {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #6a7288;
+}
+.dehoga-badge b {
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  color: var(--tinte);
+}
+.varbtn {
+  border: 1.5px solid var(--linie);
+  background: var(--papier);
+  border-radius: 14px;
+  padding: 12px 8px;
+  cursor: pointer;
+  text-align: center;
+  font: inherit;
+}
+.varbtn:hover {
+  border-color: var(--kobalt);
+}
+.varbtn.on {
+  border-color: var(--kobalt);
+  box-shadow: inset 0 0 0 2px var(--kobalt);
+}
+.ghostchair {
+  cursor: pointer;
+}
