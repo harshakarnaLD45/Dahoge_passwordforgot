@@ -5,7 +5,12 @@
   "description": "Testfassung der zentralen Mischtisch-Reservierungsplattform für Sachsen (DEHOGA Sachsen)",
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "firebase-admin": "^12.7.0",
     "leaflet": "^1.9.4",
+    "nodemailer": "^6.9.16",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-leaflet": "^4.2.1",
@@ -13,8 +18,12 @@
     "react-scripts": "5.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build"
+    "start": "concurrently -k -n api,web -c blue,green \"node server/server.js\" \"react-scripts start\"",
+    "build": "react-scripts build",
+    "server": "node server/server.js"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
   },
   "eslintConfig": {
     "extends": [

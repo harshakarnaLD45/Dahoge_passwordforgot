@@ -55,6 +55,14 @@ REACT_APP_FIREBASE_MEASUREMENT_ID=
 
 Die Firebase-Web-Konfiguration verbindet die Anwendung mit dem Projekt. Der Zugriff auf Daten wird durch `firestore.rules` und `storage.rules` geschützt.
 
+Zusätzlich muss die Anwendung wissen, wo der API-Server läuft (Passwort-Reset):
+
+```env
+REACT_APP_RESET_PASSWORD_API=http://localhost:5000/api/reset-password
+```
+
+Entwicklung: `http://localhost:5000/...` (API-Server via `npm run server`). Produktion: gleiche Domain wie die API, z. B. `https://ihre-domain.de/api/reset-password` — Firebase Hosting allein hat keinen `/api`-Backend-Rewrite (siehe `firebase.json`).
+
 ## Datenstruktur
 
 | Collection | Inhalt |

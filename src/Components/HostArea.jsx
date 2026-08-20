@@ -525,40 +525,7 @@ export function HostArea({
         One-time notification after a successful host-profile save.
         Dismissed by the host or hidden on next session (sessionStorage).
       */}
-      {justSaved && (
-        <div
-          className="card"
-          style={{
-            marginBottom: 16,
-            borderColor: "var(--honig)",
-            background: "#FDF6E7",
-            fontSize: 14,
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: 12,
-            flexWrap: "wrap",
-          }}
-        >
-          <span>
-            <b>{v("Profil gespeichert", "Profile saved")}</b>{" "}
-            {v(
-              "— Ihre Daten wurden erfolgreich aktualisiert.",
-              "— your data has been successfully updated.",
-            )}
-          </span>
-          <button
-            type="button"
-            className="btn btn-ghost btn-sm"
-            onClick={() => {
-              sessionStorage.setItem(`ha-saved-${loc.id}`, "1");
-              setJustSaved(false);
-            }}
-          >
-            {v("Verstanden", "Got it")}
-          </button>
-        </div>
-      )}
+      
       <div className="tabbar">
         <button
           className={`tab ${tab === "res" ? "on" : ""}`}

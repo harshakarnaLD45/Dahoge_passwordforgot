@@ -1,23 +1,78 @@
 // Tischform melden: Variante wählen oder selbst anordnen, Umgebung (Vm im Bundle).
 import { useState } from "react";
 import { v } from "../Utils/i18n";
-import { presetById, presetLabel, presetVariant, tischLabel, TABLE_PRESETS, UMGEBUNG, umgebungLabel } from "../Utils/table";
+import { presetById, presetLabel, presetVariant, tischLabel, TABLE_PRESETS, ROUND_SEATS, UMGEBUNG, umgebungLabel } from "../Utils/table";
 import { slugify } from "../Utils/strings";
 import { mailtoHref } from "../Utils/mail";
 import { upsertVenue, setSetting } from "../Services/storage";
 import { TableSvg } from "../Components/TableSvg";
 import { ChairEditor } from "../Components/ChairEditor";
 
+// Positionen einer gespeicherten Verteilung auf die Editor-Stühle abbilden
+// (Reihen oben 0–5 / unten 6–11, Stirnplätze 12/13; rund: alle bis zur
+// Platzzahl).
+function layoutToSlots(t) {
+  if (t.shape === "round") {
+    return [...Array(Math.min(t.n || t.seats, ROUND_SEATS.length)).keys()];
+  }
+  const layout = t.layout || {};
+  const slots = [];
+  for (let i = 0; i < (layout.top || 0); i++) slots.push(i);
+  for (let i = 0; i < (layout.bottom || 0); i++) slots.push(6 + i);
+  if (layout.left) slots.push(12);
+  if (layout.right) slots.push(13);
+  return slots;
+}
+
+// Editor mit der zuletzt gespeicherten Tischform öffnen statt mit der
+// Standardvariante (E8): gleiche Preset-Variante, Form bzw. eigene
+// Anordnung, Umgebung und Texte des Betriebs (preselect = ?betrieb=<id>).
+function initialState(locations, preselect) {
+  const loc = locations.find((l) => l.id === preselect);
+  const t = loc && loc.tisch;
+  const empty = { top: "", bottom: "", left: "", right: "" };
+  if (!t || !t.seats) {
+    return { modus: "var", variant: "E8", shape: "rect", slots: [], umgebung: empty, kontakt: "", notiz: "" };
+  }
+  const extra = {
+    umgebung: { ...empty, ...(t.umgebung || {}) },
+    kontakt: loc.tischKontakt || "",
+    notiz: loc.tischNote || "",
+  };
+  if (t.custom) {
+    return { modus: "eigen", variant: null, shape: t.custom.shape, slots: [...t.custom.slots], ...extra };
+  }
+  // Passt ein Preset exakt zur gespeicherten Form? (Varianten-Id oder
+  // Form + Platzzahl + Verteilung — z. B. "rect"/"standard" aus distributeSeats.)
+  const byId = presetById(t.variant);
+  const byShape = TABLE_PRESETS.find((p) => {
+    const pSeats =
+      p.shape === "round" ? p.n : p.layout.top + p.layout.bottom + p.layout.left + p.layout.right;
+    if (pSeats !== t.seats || p.shape !== t.shape) return false;
+    if (!p.layout) return true;
+    return ["top", "bottom", "left", "right"].every(
+      (k) => (p.layout[k] || 0) === ((t.layout || {})[k] || 0),
+    );
+  });
+  const preset = byId || byShape;
+  if (preset) {
+    return { modus: "var", variant: preset.id, shape: "rect", slots: [], ...extra };
+  }
+  // Kein Preset passt (z. B. 7 Plätze eckig) — als eigene Anordnung öffnen.
+  return { modus: "eigen", variant: null, shape: t.shape, slots: layoutToSlots(t), ...extra };
+}
+
 export function TischformPage({ locations, preselect, reload, showToast, onDone, onBack }) {
+  const initial = initialState(locations, preselect);
   const [selected, setSelected] = useState(preselect || "");
   const [name, setName] = useState("");
-  const [kontakt, setKontakt] = useState("");
-  const [modus, setModus] = useState("var");
-  const [variant, setVariant] = useState("E8");
-  const [shape, setShape] = useState("rect");
-  const [slots, setSlots] = useState([]);
-  const [notiz, setNotiz] = useState("");
-  const [umgebung, setUmgebung] = useState({ top: "", bottom: "", left: "", right: "" });
+  const [kontakt, setKontakt] = useState(initial.kontakt);
+  const [modus, setModus] = useState(initial.modus);
+  const [variant, setVariant] = useState(initial.variant || "E8");
+  const [shape, setShape] = useState(initial.shape);
+  const [slots, setSlots] = useState(initial.slots);
+  const [notiz, setNotiz] = useState(initial.notiz);
+  const [umgebung, setUmgebung] = useState(initial.umgebung);
   const [saving, setSaving] = useState(false);
   const [done, setDone] = useState(null);
 
@@ -209,7 +264,7 @@ export function TischformPage({ locations, preselect, reload, showToast, onDone,
       </p>
       <div className="card" style={{ display: "grid", gap: 16 }}>
         <div className="form-grid">
-          <div>
+          {/* <div>
             <label className="label" htmlFor="tf-sel">
               {v("Ihr Betrieb", "Your venue")}
             </label>
@@ -237,7 +292,7 @@ export function TischformPage({ locations, preselect, reload, showToast, onDone,
                 aria-label={v("Name des Betriebs", "Name of the venue")}
               />
             )}
-          </div>
+          </div> */}
           <div>
             <label className="label" htmlFor="tf-mail">
               {v("Ihre E-Mail für Rückfragen (optional)", "Your email for queries (optional)")}

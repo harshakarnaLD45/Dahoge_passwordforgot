@@ -146,10 +146,6 @@ export function LoginForm({ onDone, showToast, onForgotPassword }) {
         <button
           type="button"
           onClick={() => {
-            console.log("FORGOT BUTTON CLICKED");
-            console.log("EMAIL:", email);
-            console.log("onForgotPassword:", onForgotPassword);
-
             if (onForgotPassword) {
               onForgotPassword(email);
             }
@@ -182,8 +178,6 @@ export function LoginForm({ onDone, showToast, onForgotPassword }) {
 }
 
 export function ForgotPasswordForm({ onBack, showToast, initialEmail = "" }) {
-  console.log("FORGOT PASSWORD FORM RENDERED");
-  console.log("INITIAL EMAIL:", initialEmail);
   const [email, setEmail] = useState(initialEmail);
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);
@@ -194,11 +188,14 @@ export function ForgotPasswordForm({ onBack, showToast, initialEmail = "" }) {
     .replace(/\/api\/reset-password\/?$/, "")
     .replace(/\/+$/, "");
 
+  // Verifies the registration against the backend. Returns the status
+  // ("active" | "pending" | "not_found" | null) so callers don't have to
+  // rely on state that is only applied on the next render.
   const verifyEmail = async () => {
     const normalizedEmail = email.trim().toLowerCase();
     if (!isEmail(normalizedEmail)) {
       setVerificationStatus(null);
-      return;
+      return null;
     }
 
     setChecking(true);
@@ -218,6 +215,7 @@ export function ForgotPasswordForm({ onBack, showToast, initialEmail = "" }) {
       if (data?.status === "active") {
         setVerificationStatus("active");
         showToast(v("E-Mail bestätigt.", "Email verified."));
+        return "active";
       } else if (data?.status === "pending") {
         setVerificationStatus("pending");
         showToast(
@@ -226,6 +224,7 @@ export function ForgotPasswordForm({ onBack, showToast, initialEmail = "" }) {
             "Your registration is still under review — password reset is only possible once it has been activated.",
           ),
         );
+        return "pending";
       } else if (data?.status === "not_found") {
         setVerificationStatus("not_found");
         showToast(
@@ -234,6 +233,7 @@ export function ForgotPasswordForm({ onBack, showToast, initialEmail = "" }) {
             "No account was found for this email address.",
           ),
         );
+        return "not_found";
       } else {
         // Server nicht erreichbar oder Fehlerantwort (unavailable/error):
         // kein "Abgelehnt" anzeigen, nur neutral informieren.
@@ -244,6 +244,7 @@ export function ForgotPasswordForm({ onBack, showToast, initialEmail = "" }) {
             "Verification is currently unavailable — please try again later.",
           ),
         );
+        return null;
       }
     } catch (err) {
       console.error("Verification check error:", err);
@@ -254,12 +255,15 @@ export function ForgotPasswordForm({ onBack, showToast, initialEmail = "" }) {
           "Verification is currently unavailable — please try again later.",
         ),
       );
+      return null;
     } finally {
       setChecking(false);
     }
   };
 
   const submit = async () => {
+    if (busy) return;
+
     const normalizedEmail = email.trim().toLowerCase();
 
     if (!isEmail(normalizedEmail)) {
@@ -275,6 +279,14 @@ export function ForgotPasswordForm({ onBack, showToast, initialEmail = "" }) {
     setBusy(true);
 
     try {
+      // Verify the registration first — only active registrations may reset
+      // their password. The backend enforces the same gate on
+      // /api/reset-password. The toast for non-active states is shown by
+      // verifyEmail itself.
+      const status = await verifyEmail();
+
+      if (status !== "active") return;
+
       await sendHostPasswordResetEmail(normalizedEmail);
 
       setSent(true);
@@ -437,9 +449,8 @@ export function ForgotPasswordForm({ onBack, showToast, initialEmail = "" }) {
               setEmail(e.target.value);
               if (verificationStatus) setVerificationStatus(null);
             }}
-            onBlur={() => verifyEmail()}
             onKeyDown={(e) => {
-              if (e.key === "Enter" && verificationStatus === "active") submit();
+              if (e.key === "Enter") submit();
             }}
             placeholder={v(
               "reservierung@ihr-betrieb.example",
@@ -488,7 +499,7 @@ export function ForgotPasswordForm({ onBack, showToast, initialEmail = "" }) {
         <button
           type="button"
           className="btn btn-primary"
-          disabled={busy || verificationStatus !== "active"}
+          disabled={busy}
           onClick={submit}
         >
           {busy

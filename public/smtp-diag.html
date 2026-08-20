@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<title>SMTP.js Diagnose</title>
+<style>
+  body { font-family: system-ui, sans-serif; padding: 24px; background: #f5f3ec; }
+  pre { background: #1e2c28; color: #d8f3e5; padding: 14px; border-radius: 8px; white-space: pre-wrap; }
+  .ok { color: #1b7a3d; font-weight: 700; }
+  .fail { color: #b4443c; font-weight: 700; }
+</style>
+</head>
+<body>
+<h1>SMTP.js Diagnose</h1>
+<div id="out">Prüfe …</div>
+<script src="https://smtpjs.com/v3/smtp.js"></script>
+<script>
+  const out = document.getElementById("out");
+  const log = (html) => { out.innerHTML += html + "<br>"; };
+
+  (async () => {
+    log(`<b>window.Email vorhanden:</b> ${typeof window.Email !== "undefined" && typeof window.Email.send === "function"}`);
+
+    if (typeof window.Email === "undefined" || typeof window.Email.send !== "function") {
+      log('<span class="fail">FAIL — SMTP.js wurde nicht geladen (CDN blockiert?).</span>');
+      return;
+    }
+
+    try {
+      const response = await window.Email.send({
+        SecureToken: "DAD9C3A6A1FBA2F8CDBCBC3DEE2F4687A2B7",
+        To: "smtp-diag@invalid.test",
+        From: "Mischtisch.sachsen@gmail.com",
+        FromName: "Mischtisch Sachsen",
+        Subject: "SMTP.js Diagnose",
+        Body: "<p>Diagnose-Probe</p>",
+      });
+      const message = String(response || "").trim();
+      const isOk = message.toUpperCase() === "OK";
+      log(`<span class="${isOk ? "ok" : "fail"}">Antwort: ${JSON.stringify(message)}</span>`);
+      log(isOk
+        ? "SMTP.js funktioniert — das Token ist gültig."
+        : "SMTP.js lehnt ab — Token ungültig/abgelaufen oder Absender nicht verifiziert.");
+    } catch (err) {
+      log(`<span class="fail">Exception: ${String(err?.message || err)}</span>`);
+    }
+  })();
+</script>
+</body>
+</html>
